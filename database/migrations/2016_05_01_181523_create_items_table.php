@@ -17,7 +17,9 @@ class CreateItemsTable extends Migration {
 			$table->increments('id');
 			$table->string('name', 100);
             $table->float('weight');
-            $table->integer('size', false, true);
+            $table->smallInteger('length', false, true);
+            $table->smallInteger('width', false, true);
+            $table->smallInteger('height', false, true);
 		});
 
 
