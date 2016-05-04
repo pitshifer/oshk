@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Order;
 
 class OrderController extends Controller {
 
@@ -10,6 +11,8 @@ class OrderController extends Controller {
      */
     public function getIndex()
     {
-        echo 'order/index page';
+        $orders = Order::all();
+
+        return view('order.index', compact('orders'));
     }
 }
