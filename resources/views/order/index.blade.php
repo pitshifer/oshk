@@ -26,7 +26,7 @@
             <td>{{$order->id}}</td>
             <td>{{$order->zipcode_from}}</td>
             <td>{{$order->zipcode_to}}</td>
-            <td>{{$order->created_at}}</td>
+            <td>{{$order->created_at->format('j M H:i')}}</td>
             <td class="action-col">
                 <a href="{{url('order/view', ['id'=>$order->id])}}" class="btn btn-sm btn-info">view</a>
                 <a href="{{url('order/update', ['id'=>$order->id])}}" class="btn btn-sm btn-success">update</a>
