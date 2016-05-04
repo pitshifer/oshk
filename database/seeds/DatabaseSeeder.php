@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use App\Order;
 
 class DatabaseSeeder extends Seeder {
 
@@ -42,13 +43,16 @@ class OrderTableSeeder extends Seeder
 {
 	public function run()
 	{
-		DB::table('orders')->insert([
+        $orders = [
             ['zipcode_from' => '105173', 'zipcode_to' => '307041'],
             ['zipcode_from' => '634011', 'zipcode_to' => '127253'],
             ['zipcode_from' => '632959', 'zipcode_to' => '433910'],
             ['zipcode_from' => '352171', 'zipcode_to' => '656000'],
             ['zipcode_from' => '442825', 'zipcode_to' => '433320'],
-		]);
+        ];
+        foreach($orders as $order) {
+            Order::create($order);
+        }
 	}
 }
 
