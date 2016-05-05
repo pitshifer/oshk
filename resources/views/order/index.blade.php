@@ -14,9 +14,11 @@
     <thead>
     <tr>
         <td>№</td>
+        <td>User</td>
         <td>Zip code from</td>
         <td>Zip code to</td>
         <td>Created at</td>
+        <td>Price</td>
         <td>Actions</td>
     </tr>
     </thead>
@@ -24,9 +26,11 @@
     @foreach($orders as $order)
         <tr>
             <td>{{$order->id}}</td>
+            <td>{{$user->name}}</td>
             <td>{{$order->zipcode_from}}</td>
             <td>{{$order->zipcode_to}}</td>
             <td>{{$order->created_at->format('j M H:i')}}</td>
+            <td>{{$order->price}}</td>
             <td class="action-col">
                 <a href="{{url('order/view', ['id'=>$order->id])}}" class="btn btn-sm btn-info">view</a>
                 <a href="{{url('order/update', ['id'=>$order->id])}}" class="btn btn-sm btn-success">update</a>
