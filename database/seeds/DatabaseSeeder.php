@@ -16,11 +16,24 @@ class DatabaseSeeder extends Seeder {
 	{
 		Model::unguard();
 
+        $this->call('UserTableSeeder');
         $this->call('ItemTableSeeder');
         $this->call('OrderTableSeeder');
         $this->call('OrderItemTableSeeder');
 	}
 
+}
+
+class UserTableSeeder extends Seeder
+{
+    public function run()
+    {
+        DB::table('users')->insert([
+            'name' => 'Filimon',
+            'email' => 'filimon@inc.com',
+            'password' => bcrypt('pass'),
+        ]);
+    }
 }
 
 class ItemTableSeeder extends Seeder
@@ -44,11 +57,11 @@ class OrderTableSeeder extends Seeder
 	public function run()
 	{
         $orders = [
-            ['zipcode_from' => '105173', 'zipcode_to' => '307041'],
-            ['zipcode_from' => '634011', 'zipcode_to' => '127253'],
-            ['zipcode_from' => '632959', 'zipcode_to' => '433910'],
-            ['zipcode_from' => '352171', 'zipcode_to' => '656000'],
-            ['zipcode_from' => '442825', 'zipcode_to' => '433320'],
+            ['zipcode_from' => '105173', 'zipcode_to' => '307041', 'user_id' => 1, 'price' => '0.00'],
+            ['zipcode_from' => '634011', 'zipcode_to' => '127253', 'user_id' => 1, 'price' => '0.00'],
+            ['zipcode_from' => '632959', 'zipcode_to' => '433910', 'user_id' => 1, 'price' => '0.00'],
+            ['zipcode_from' => '352171', 'zipcode_to' => '656000', 'user_id' => 1, 'price' => '0.00'],
+            ['zipcode_from' => '442825', 'zipcode_to' => '433320', 'user_id' => 1, 'price' => '0.00'],
         ];
         foreach($orders as $order) {
             Order::create($order);
