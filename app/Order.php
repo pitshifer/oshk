@@ -6,7 +6,7 @@ class Order extends Model {
 
     public function items()
     {
-        return $this->belongsToMany('App\Item', 'order_item');
+        return $this->belongsToMany('App\Item', 'order_item')->withPivot('amount');
     }
 
     public function user()

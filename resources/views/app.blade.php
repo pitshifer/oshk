@@ -24,7 +24,7 @@
 		</div>
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="{{url('order/index')}}">Orders</a></li>
+				<li><a href="{{url('order/index')}}">Orders</a></li>
 			</ul>
 		</div><!--/.nav-collapse -->
 	</div>
