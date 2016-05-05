@@ -74,21 +74,21 @@ class OrderItemTableSeeder extends Seeder
     public function run()
     {
         DB::table('order_item')->insert([
-            ['order_id' => 1, 'item_id' => 1],
-            ['order_id' => 1, 'item_id' => 3],
-            ['order_id' => 1, 'item_id' => 5],
-            ['order_id' => 2, 'item_id' => 2],
-            ['order_id' => 2, 'item_id' => 4],
-            ['order_id' => 2, 'item_id' => 6],
-            ['order_id' => 2, 'item_id' => 3],
-            ['order_id' => 3, 'item_id' => 7],
-            ['order_id' => 3, 'item_id' => 5],
-            ['order_id' => 3, 'item_id' => 1],
-            ['order_id' => 3, 'item_id' => 2],
-            ['order_id' => 3, 'item_id' => 4],
-            ['order_id' => 4, 'item_id' => 5],
-            ['order_id' => 5, 'item_id' => 1],
-            ['order_id' => 5, 'item_id' => 7],
+            ['order_id' => 1, 'item_id' => 1, 'amount' => 1],
+            ['order_id' => 1, 'item_id' => 3, 'amount' => 1],
+            ['order_id' => 1, 'item_id' => 5, 'amount' => 1],
+            ['order_id' => 2, 'item_id' => 2, 'amount' => 1],
+            ['order_id' => 2, 'item_id' => 4, 'amount' => 1],
+            ['order_id' => 2, 'item_id' => 6, 'amount' => 1],
+            ['order_id' => 2, 'item_id' => 3, 'amount' => 1],
+            ['order_id' => 3, 'item_id' => 7, 'amount' => 1],
+            ['order_id' => 3, 'item_id' => 5, 'amount' => 1],
+            ['order_id' => 3, 'item_id' => 1, 'amount' => 1],
+            ['order_id' => 3, 'item_id' => 2, 'amount' => 1],
+            ['order_id' => 3, 'item_id' => 4, 'amount' => 1],
+            ['order_id' => 4, 'item_id' => 5, 'amount' => 1],
+            ['order_id' => 5, 'item_id' => 1, 'amount' => 1],
+            ['order_id' => 5, 'item_id' => 7, 'amount' => 1],
         ]);
     }
 }
