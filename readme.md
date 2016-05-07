@@ -1,2 +1,2 @@
 email: filimon@inc.com
- password: pass
+password: pass

@@ -1,4 +1,5 @@
 <?php
+use \Illuminate\Support\Facades\Response;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,32 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
     'order' => 'OrderController',
 ]);
+
+// Выдача списка всех товаров с их характеристиками
+Route::get('/item/all', ['before' => 'auth', function() {
+    return Response::json(\App\Item::all());
+}]);
+
+// Выдача данных по одному товару. Принимаем ID товара
+Route::post('/item/getInfo', ['before' => 'auth', function(\Illuminate\Http\Request $request) {
+    $errors = [];
+    $response = ['success' => true];
+    // ID товара
+    $id = (int)$request->input('id');
+
+    // Проверяем ID и существование товара в базе
+    if(!$id || !$item = \App\Item::find($id)) {
+        $errors[] = 'Товар не найден';
+    }
+
+    if(empty($errors)) {
+        $response['info'] = $item;
+    } else {
+        $response = [
+            'success' => false,
+            'errors' => $errors,
+        ];
+    }
+
+    return Response::json($response);
+}]);
