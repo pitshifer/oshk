@@ -6,7 +6,11 @@ use Illuminate\Support\Facades\Auth;
 use App\Order;
 use App\Item;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\MessageBag;
 
 class OrderController extends Controller {
 
@@ -63,26 +67,40 @@ public function __construct()
             'zip_code_to' => 'required|integer',
         ]);
 
-        // Получаем пользователя
-        $user = Auth::user();
+        // начало транзакции
+        DB::beginTransaction();
 
-        // создаем модель заказа заказ
-        $order = new Order([
-            'zipcode_from' => $request->get('zip_code_from'),
-            'zipcode_to' => $request->get('zip_code_to'),
-        ]);
+        try {
+            // Получаем пользователя
+            $user = Auth::user();
 
-        // сохраняем заказ с привязкой к пользователю
-        $order = $user->orders()->save($order);
+            // создаем модель заказа заказ
+            $order = new Order([
+                'zipcode_from' => $request->get('zip_code_from'),
+                'zipcode_to' => $request->get('zip_code_to'),
+            ]);
 
-        // приязываем товары к заказу если они есть
-        if($itemsID = $request->get('items')) {
-            $itemsAmount = [];
-            foreach($itemsID as $id => $amount) {
-                $itemsAmount[$id] = ['amount' => $amount];
+            // сохраняем заказ с привязкой к пользователю
+            $order = $user->orders()->save($order);
+
+            // приязываем товары к заказу если они есть
+            if($itemsID = $request->get('items')) {
+                $itemsAmount = [];
+                foreach($itemsID as $id => $amount) {
+                    $itemsAmount[$id] = ['amount' => $amount];
+                }
+
+                $order->items()->sync($itemsAmount);
             }
 
-            $order->items()->sync($itemsAmount);
+            // Пересчитать стоимость доставки
+            $order->calculateDelivery();
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            $messageBag = new MessageBag(['items'=>$e->getMessage()]);
+            return redirect('order/create')->withInput()->withError($messageBag);
         }
 
         return redirect('/order/index');
