@@ -39,7 +39,7 @@ var App = function(el) {
         tr += '<td>' + item.width + '</td>';
         tr += '<td>' + item.length + '</td>';
         tr += '<td>' + item.height + '</td>';
-        tr += '<td><input type="number" value="1"></td>';
+        tr += '<td><input type="number" name="items[' + item.id + ']" value="1"></td>';
         tr += '<td><button class="btn btn-sm btn-danger remove-item" type="button">убрать</button></td>';
         tr += '</tr>';
 

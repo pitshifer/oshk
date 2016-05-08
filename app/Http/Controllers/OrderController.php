@@ -43,8 +43,9 @@ public function __construct()
     public function getCreate()
     {
         $items = Item::all();
+        $zipcodes = ['105173','155550','634011','127253','663980','433910','663980','656000','105173','155550'];
 
-        return view('order.create', compact('items'));
+        return view('order.create', compact('items', 'zipcodes'));
     }
 
     /**
@@ -57,16 +58,31 @@ public function __construct()
     {
         // проверяем данные
         // todo следует так же проверять на то что должно содержаться 6 цифр. Нужно создать свой валидатор.
-        $validator = Validator::make($request->all(), [
+        $this->validate($request, [
             'zip_code_from' => 'required|integer',
             'zip_code_to' => 'required|integer',
         ]);
 
-        // в случае ошибки делаем редирект с записью в сессию сообщения об ошибках
-        if($validator->fails()) {
-            return redirect('/order/create')
-                ->withInput()
-                ->withErrors($validator);
+        // Получаем пользователя
+        $user = Auth::user();
+
+        // создаем модель заказа заказ
+        $order = new Order([
+            'zipcode_from' => $request->get('zip_code_from'),
+            'zipcode_to' => $request->get('zip_code_to'),
+        ]);
+
+        // сохраняем заказ с привязкой к пользователю
+        $order = $user->orders()->save($order);
+
+        // приязываем товары к заказу если они есть
+        if($itemsID = $request->get('items')) {
+            $itemsAmount = [];
+            foreach($itemsID as $id => $amount) {
+                $itemsAmount[$id] = ['amount' => $amount];
+            }
+
+            $order->items()->sync($itemsAmount);
         }
 
         return redirect('/order/index');

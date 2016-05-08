@@ -3,6 +3,8 @@
  * @var $errors \Illuminate\Support\MessageBag
  * @var $items \App\Item[]
  */
+$old['zip_code_from'] = \Illuminate\Support\Facades\Input::old('zip_code_from');
+$old['zip_code_to'] = \Illuminate\Support\Facades\Input::old('zip_code_to');
 ?>
 @extends('app')
 
@@ -26,13 +28,21 @@
         <div class="form-group">
             <label for="zip-code-from" class="col-lg-3 control-label">Индекс места отправления</label>
             <div class="col-lg-2">
-                <input type="text" name="zip_code_from" class="form-control" id="zip-code-from" maxlength="6">
+                <select name="zip_code_from" class="form-control" id="zip-code-from">
+                    @foreach($zipcodes as $zc)
+                        <option value="{{$zc}}" <?= $old['zip_code_from'] ? 'selected' : '' ?>>{{$zc}}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
         <div class="form-group">
             <label for="zip-code-to" class="col-lg-3 control-label">Индекс места прибытия</label>
             <div class="col-lg-2">
-                <input type="text" name="zip_code_to" class="form-control" id="zip-code-from"  maxlength="6">
+                <select name="zip_code_to" class="form-control" id="zip-code-from">
+                    @foreach($zipcodes as $zc)
+                        <option value="{{$zc}}" <?= $old['zip_code_from'] ? 'selected' : '' ?>>{{$zc}}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
 
