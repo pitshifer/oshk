@@ -5,6 +5,7 @@
  */
 $old['zip_code_from'] = \Illuminate\Support\Facades\Input::old('zip_code_from');
 $old['zip_code_to'] = \Illuminate\Support\Facades\Input::old('zip_code_to');
+$old['items'] = \Illuminate\Support\Facades\Input::old('items');
 ?>
 @extends('app')
 
@@ -85,4 +86,10 @@ $old['zip_code_to'] = \Illuminate\Support\Facades\Input::old('zip_code_to');
 
 @section('pos_end')
     <script src="{{asset('js/order-create.js')}}"></script>
+    <script>
+        var app = new App('#form-order').init();
+        <?php if($old['items']): ?>
+        app.addItem(<?= json_encode($old['items']) ?>);
+        <?php endif; ?>
+    </script>
 @endsection

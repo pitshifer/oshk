@@ -46,10 +46,9 @@ public function __construct()
      */
     public function getCreate()
     {
-        $items = Item::all();
         $zipcodes = ['105173','155550','634011','127253','663980','433910','663980','656000','105173','155550'];
 
-        return view('order.create', compact('items', 'zipcodes'));
+        return view('order.create', compact('zipcodes'));
     }
 
     /**
