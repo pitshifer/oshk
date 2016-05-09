@@ -104,4 +104,19 @@ public function __construct()
 
         return redirect('/order/index');
     }
+
+    /**
+     * Удаление заказа
+     */
+    public function getDelete($id)
+    {
+        $user = Auth::user();
+
+        // Удаляем запись о заказе
+        // Пользователь может удалять только свои запись. Добиваемся этого с помошью условия в запросе на удаление.
+        // Удаление отношений из связующей таблицуе реализуется самой СУБД
+        Order::where('user_id', '=', $user->id)->where('id', '=', $id)->delete($id);
+
+        return redirect('order/index');
+    }
 }
