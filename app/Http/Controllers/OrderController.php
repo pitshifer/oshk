@@ -73,7 +73,7 @@ public function __construct()
             // Получаем пользователя
             $user = Auth::user();
 
-            // создаем модель заказа заказ
+            // создаем модель заказа
             $order = new Order([
                 'zipcode_from' => $request->get('zip_code_from'),
                 'zipcode_to' => $request->get('zip_code_to'),
@@ -99,7 +99,7 @@ public function __construct()
         } catch (\Exception $e) {
             DB::rollback();
             $messageBag = new MessageBag(['items'=>$e->getMessage()]);
-            return redirect('order/create')->withInput()->withError($messageBag);
+            return redirect('order/create')->withInput()->withErrors($messageBag);
         }
 
         return redirect('/order/index');
