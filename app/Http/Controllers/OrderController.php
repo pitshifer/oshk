@@ -61,10 +61,9 @@ public function __construct()
     public function postCreate(Request $request)
     {
         // проверяем данные
-        // todo следует так же проверять на то что должно содержаться 6 цифр. Нужно создать свой валидатор.
         $this->validate($request, [
-            'zip_code_from' => 'required|integer',
-            'zip_code_to' => 'required|integer',
+            'zip_code_from' => 'required|digits:6',
+            'zip_code_to' => 'required|digits:6',
         ]);
 
         // начало транзакции
